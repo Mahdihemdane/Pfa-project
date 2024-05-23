@@ -19,7 +19,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('gestion_joueurs/', include('gestion_joueurs.urls')),  # Inclure les URLs de l'application 'myapp'
-    path('football_Academique/', include('football_Academique.urls')),  # Inclure les URLs de l'application 'myapp'
-
+   
 ]
