@@ -34,3 +34,7 @@ def planifier_entrainement(request):
 def liste_entrainements(request):
     entrainements = Entrainement.objects.all()
     return render(request, 'gestion_joueurs/liste_entrainements.html', {'entrainements': entrainements})
+
+
+def home(request):
+    return render(request, 'pages/coach.html')
