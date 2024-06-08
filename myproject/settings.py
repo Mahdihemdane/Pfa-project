@@ -1,3 +1,4 @@
+
 """
 Django settings for projetDjango project.
 
@@ -14,12 +15,16 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '&4f_a+n+ls=6emh_=ip#iho^jg2#hzbgayud7$#9y5@*6e=e-%'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']  # Add your production domain here
 
 
 # Application definition
