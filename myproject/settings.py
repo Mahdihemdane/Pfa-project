@@ -19,12 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&4f_a+n+ls=6emh_=ip#iho^jg2#hzbgayud7$#9y5@*6e=e-%'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
 ALLOWED_HOSTS = []
 
 
@@ -58,7 +52,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,7 +66,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
-# settings.py
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -128,19 +121,17 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'statics'),)
 
 
-# upload images
+# Media files
 MEDIA_URL = '/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 
-
-
-
+# Login and logout redirects
 LOGIN_REDIRECT_URL = 'event_index'
 LOGOUT_REDIRECT_URL = 'event_index'
 
 
-# for stripe
-# Please insert your Stripe API keys below
+# Stripe settings
+# Replace these with your actual Stripe API keys
 STRIPE_PUBLIC_KEY = 'pk_test_oKhSR5nslBRnBZpjO6KuzZeX'
 STRIPE_SECRET_KEY = 'sk_test_VePHdqKTYQjKNInc7u56JBrQ'
