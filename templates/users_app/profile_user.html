@@ -7,32 +7,77 @@
 
 
 {% block content %}
-<br>
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
 
-<div class="container bg-white">
-    <h2>Mon Profil</h2>
-    <div class="row">
-        <div class="col-sm-6">
-            <br>
-            <img src="{{profile.profile_img.url}}" alt="Profile Picture" class="img-responsive" width="300" height="300" >
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="{{profile.profile_img.url}}" alt="Profile" class="rounded-circle">
+              <h2>{{profile.nom}}  {{profile.prenom}}</h2>
+              <h3>{{profile.user_type}}</h3>
+            </div>
+          </div>
+
         </div>
-        <div class="col-sm-6">
-            <ul class="list-group">
-                <li class="list-group-item">ID : {{profile.id}}</li>
-                <li class="list-group-item">Type Compte :  {{profile.user_type}}</li>
-            </ul>
-            <br>
-            <ul class="list-group">
-                <li class="list-group-item">Nom : {{profile.nom}}</li>
-                <li class="list-group-item">Prenom : {{profile.prenom}}</li>
-                <li class="list-group-item">Email : {{profile.email}}</li>
-                <li class="list-group-item">Address : {{profile.addresse}}</li>
-            </ul>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+
+                <li class="nav-item">
+                  <a class="nav-link active" href="{% url 'profile' request.user.id %}">Overview</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link"  href="{% url 'modifier_profil' profile.id%}">Edit Profile</a>
+                </li>
+
+
+              </ul>
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                  <h5 class="card-title">Profile Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                    <div class="col-lg-9 col-md-8">{{profile.nom}} {{profile.prenom}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Email</div>
+                    <div class="col-lg-9 col-md-8">{{profile.email}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Address</div>
+                    <div class="col-lg-9 col-md-8">{{profile.addresse}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Type Compte :</div>
+                    <div class="col-lg-9 col-md-8">{{profile.user_type}}</div>
+                  </div>
+
+
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
         </div>
-    </div>
-    <br>
-    <a href="{% url 'modifier_profil' profile.id%}" class="btn btn-success">Modifier mon profil</a>
-</div>
+      </div>
+    </section>
+
 
 {% endblock content %}
 

@@ -6,7 +6,7 @@
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center bg-white">
     <div class="content">       
-        <img src={{detail.image.url}} class="card-img-top" alt="{{detail.match}}">
+        <img src="{{detail.image.url}}" class="card-img-top" alt="{{detail.match}}">
         <h5>Date: {{detail.date}}</h5>
         <p>
             Match: {{detail.match}}.
@@ -33,11 +33,10 @@
                 {% if detail.organisateur.categorie == 'ligue 2' %}
                     <img src="{% static 'ligue2 tunisie.png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{detail.organisateur.categorie}}">
                 {% endif %}
-                {% if detail.organisateur.categorie == 'Coupe de tunisie' %}
-                    <img src="{% static 'Coupe_de_Tunisie_de_football_(logo).png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{detail.organisateur.categorie}}">
+                {% if detail.organisateur.categorie == 'Coupe du tunisie' %}
+                    <img src="{% static 'Coupe_de_Tunisie_de_football_(logo).jpg'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{detail.organisateur.categorie}}">
                 {% endif %}
 
-                {{detail.organisateur.categorie}}
             </center>
         </small>
         

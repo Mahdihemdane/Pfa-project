@@ -3,7 +3,8 @@
 {% load static %}
 
 {% block content %}
-<div class="container">   
+<div class="container">
+
     {% if user.is_authenticated %}
     <form class="d-flex" method="post" action="{% url 'search'%}">
         {% csrf_token %}
@@ -18,18 +19,14 @@
             <div class="col">
                 <div class="card h-100">
                     <!-- <img src="..." class="card-img-top" alt="..."> -->
-                    <img src={{event.image.url}} class="card-img-top" alt="{{event.match}}">
+                    <img src="{{event.image.url}}" class="card-img-top" alt="{{event.match}}">
                     <div class="card-body">
                         <div class="card-title">
-                            <h5>Match:</h5>
-                            <h6> {{event.match}}</h6>
+<center>
+      <h6> {{event.match}}</h6>
+</center>
                         </div>
-
-                        <small><a href="{% url 'event_detail' event.id%}" class="btn btn-secondary">details</a></small>
-                    </div>
-
-                    <div class="card-footer">
-                        <small class="text-body-secondary">
+ <small class="text-body-secondary">
                             <center>
                                 {% if event.organisateur.categorie == 'Amateur League' %}
                                     <img src="{% static 'amateur_league_matchs.png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
@@ -41,12 +38,25 @@
                                     <img src="{% static 'ligue2 tunisie.png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
                                 {% endif %}
                                 {% if event.organisateur.categorie == 'Coupe du tunisie' %}
-                                    <img src="{% static 'Coupe_de_Tunisie_de_football_(logo).png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
+                                    <img src="{% static 'Coupe_de_Tunisie_de_football_(logo).jpg'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
                                 {% endif %}
 
-                                {{event.organisateur.categorie}}
                             </center>
                         </small>
+                    </div>
+
+                    <div class="card-footer">
+                                            <small><a href="{% url 'event_detail' event.id%}" class="btn btn-secondary float-end">Details</a></small>
+                           {% if user.is_authenticated %}
+                                {% for group in user.groups.all %}
+                                    {% if group.name == 'client_group' %}
+                                        <a href="{% url 'ticket_acheter' event.id request.user.id %}"
+                                           class="btn btn-success">Acheter Ticket</a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
+
                     </div>
                 </div>
             </div>

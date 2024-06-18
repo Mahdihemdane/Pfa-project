@@ -15,7 +15,7 @@ function incrementQuantity(i) {
 function updatePrice(i) {
     var row = i.parentNode.parentNode;
     var ticketType = i.value;
-    var priceCell = row.querySelectorAll("td")[2];
+    var priceCell = row.querySelectorAll("td")[0];
     var quantityInput = row.querySelectorAll("td")[3].querySelector("input[type='text']");
     var quantity = parseInt(quantityInput.value);
     // var price = ticketType === "VIP" ? 200 : 120;
@@ -24,9 +24,9 @@ function updatePrice(i) {
     if (ticketType === "VIP") price = 200;
     
 
-    priceCell.textContent = price.toFixed(2) + " DH";
+    priceCell.textContent = price.toFixed(2) + " TND";
     var rowTotal = quantity * price;
-    row.querySelectorAll("td")[4].textContent = rowTotal.toFixed(2) + " DH";
+    row.querySelectorAll("td")[4].textContent = rowTotal.toFixed(0) + " TND";
     updateTotal();
 }
 
@@ -52,9 +52,9 @@ function updateTotal() {
     for (var i = 1; i < rows.length; i++) {
         var quantityInput = rows[i].querySelectorAll("td")[3].querySelector("input[type='text']");
         var quantity = parseInt(quantityInput.value);
-        var price = parseFloat(rows[i].querySelectorAll("td")[2].textContent.replace(" DH", ""));
+        var price = parseFloat(rows[i].querySelectorAll("td")[2].textContent.replace(" TND", ""));
         var rowTotal = quantity * price;
-        rows[i].querySelectorAll("td")[4].textContent = rowTotal.toFixed(2) + " DH";
+        rows[i].querySelectorAll("td")[4].textContent = rowTotal.toFixed(0) + " TND";
         total += rowTotal;
     }
     // document.querySelector("#total-amount").textContent = total.toFixed(2) + " DH";

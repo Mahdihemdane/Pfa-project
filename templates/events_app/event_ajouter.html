@@ -1,48 +1,68 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container border rounded bg-white">
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8">
-        <h3 class="text-center mb-4">Ajouter un Evenement - Match</h3>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="mb-3">
-            <label for="match_event" class="form-label">Match :</label>
-            <input type="text" class="form-control" name="match_event" id="match_event" placeholder="Ex.: Association Salé vs Kawkab Marrakech">
-          </div>
-  
-          <div class="mb-3">
-            <label for="date_event" class="form-label">Date :</label>
-            <input type="date" class="form-control" name="date_event" id="date_event" required>
-          </div>
-  
-          <div class="mb-3">
-            <label for="lieu_event" class="form-label">Lieu :</label>
-            <input type="text" class="form-control" name="lieu_event" id="lieu_event" placeholder="Ex.: Stade Mohamed V, Casablanca">
-          </div>
-  
-          <div class="mb-3">
-            <label for="organisateur_event" class="form-label">Organisateur :</label>
-            <div class="form-check">
-              {% for org in organisateurs %}
-                <input class="form-check-input" type="radio" name="organisateur_event" id="{{org.categorie}}" value="{{org.categorie}}">
-                <label class="form-check-label" for="{{org.categorie}}">{{org.categorie}}</label>
-                <br>
-              {% endfor %}
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card" style="padding: 30px">
+                    <div class="card-body">
+                        <h5 class="card-title">Ajouter un Evenement - Match</h5>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <label for="match_event" class="col-sm-2 col-form-label">Match :</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="match_event" id="match_event"
+                                           placeholder="Ex.: Espérene de Tunis vs Club Africain">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="lieu_event" class="col-sm-2 col-form-label">Lieu :</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="lieu_event" id="lieu_event"
+                                           placeholder="Ex.: Stade Mohamed V, Casablanca" autocomplete="False">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="date_event" class="col-sm-2 col-form-label">Date :</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" name="date_event" id="date_event" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="organisateur_event" class="col-form-label col-sm-2 pt-0">Organisateur
+                                    :</label>
+                                <div class="col-sm-10">
+                                    {% for org in organisateurs %}
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="organisateur_event"
+                                                   id="{{ org.categorie }}" value="{{ org.categorie }}">
+                                            <label class="form-check-label" for="{{ org.categorie }}">
+                                                {{ org.categorie }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="image_event" class="col-sm-2 col-form-label">Image Upload</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="file" name="image_event" accept=".png">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-success float-end ">Ajouter</button>
+                                </div>
+                            </div>
+                        </form><!-- End General Form Elements -->
+                    </div>
+                </div>
             </div>
-          </div>
-  
-          <div class="mb-3">
-            <label for="image_event" class="form-label">Image :</label>
-            <input type="file" name="image_event" accept=".png" class="form-control">
-          </div>
-  
-          <button type="submit" class="btn btn-primary btn-block mt-4">Ajouter</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  
+        </div>
+    </section>
 
 {% endblock %}

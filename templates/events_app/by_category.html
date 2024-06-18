@@ -3,70 +3,79 @@
 {% load static %}
 
 {% block content %}
-<div class="container bg-white">   
-    {% if user.is_authenticated %}
-    <form class="d-flex" method="post" action="{% url 'search'%}">
-        {% csrf_token %}
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_bar">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-    {% endif %}
+    <div class="container bg-white">
+        {% if user.is_authenticated %}
+            <form class="d-flex" method="post" action="{% url 'search' %}">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                       name="search_bar">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        {% endif %}
 
-    <br><p>{{ matchs_list.0.organisateur.description }}</p><br>
-</div>
-
-<div class="container">   
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-
-        {% for event in matchs_list %}
-            
-        <div class="col">
-            <div class="card h-100">
-                <img src={{event.image.url}} class="card-img-top" alt="{{event.match}}">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h5>Match:</h5>
-                        <h6> {{event.match}}</h6>
-                    </div>
-                    
-                    {% if user.is_authenticated %}
-                    {% for group in user.groups.all %}
-                        {% if group.name == 'client_group' %}
-                        <a href="{% url 'ticket_acheter' event.id request.user.id%}" class="btn btn-primary">Acheter Ticket</a>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-                    <small><a href="{% url 'event_detail' event.id%}" class="btn btn-secondary">details</a></small>
-                </div>
-
-                <div class="card-footer">
-                    <small class="text-body-secondary">
-                        <center>
-                            {% if event.organisateur.categorie == 'Amateur League' %}
-                                <img src="{% static 'Amateur League logo.png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
-                            {% endif %}
-                            {% if event.organisateur.categorie == 'ligue 1' %}
-                                <img src="{% static 'Tunisian_Ligue_1_(logo).png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
-                            {% endif %}
-                            {% if event.organisateur.categorie == 'ligue 2' %}
-                                <img src="{% static 'ligue2 tunisie.png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
-                            {% endif %}
-                            {% if event.organisateur.categorie == 'Coupe du tunisie' %}
-                                <img src="{% static 'Coupe_de_Tunisie_de_football_(Logo).png'%}" style="height: 40px; width: auto;" class="card-img-top" alt="{{event.organisateur.categorie}}">
-                            {% endif %}
-
-                            {{event.organisateur.categorie}}
-                        </center>
-                    </small>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-
-        
 
     </div>
-</div>
-<br>
+    <br>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            {% for event in matchs_list %}
+
+                <div class="col">
+                    <div class="card h-100">
+                        <img src={{ event.image.url }} class="card-img-top" alt="{{ event.match }}">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <center>
+                                    <h6> {{ event.match }}</h6>
+                                </center>
+                            </div>
+
+                       
+
+                            <small class="text-body-secondary">
+                                <center>
+                                    {% if event.organisateur.categorie == 'Amateur League' %}
+                                        <img src="{% static 'Amateur League logo.png' %}"
+                                             style="height: 40px; width: auto;" class="card-img-top"
+                                             alt="{{ event.organisateur.categorie }}">
+                                    {% endif %}
+                                    {% if event.organisateur.categorie == 'ligue 1' %}
+                                        <img src="{% static 'Tunisian_Ligue_1_(logo).png' %}"
+                                             style="height: 40px; width: auto;" class="card-img-top"
+                                             alt="{{ event.organisateur.categorie }}">
+                                    {% endif %}
+                                    {% if event.organisateur.categorie == 'ligue 2' %}
+                                        <img src="{% static 'ligue2 tunisie.png' %}" style="height: 40px; width: auto;"
+                                             class="card-img-top" alt="{{ event.organisateur.categorie }}">
+                                    {% endif %}
+                                    {% if event.organisateur.categorie == 'Coupe du tunisie' %}
+                                        <img src="{% static 'Coupe_de_Tunisie_de_football_(Logo).jpg' %}"
+                                             style="height: 40px; width: auto;" class="card-img-top"
+                                             alt="{{ event.organisateur.categorie }}">
+                                    {% endif %}
+
+                                </center>
+                            </small></div>
+
+                        <div class="card-footer">
+                            <small><a href="{% url 'event_detail' event.id %}" class="btn btn-secondary float-end">Détails</a></small>
+     {% if user.is_authenticated %}
+                                {% for group in user.groups.all %}
+                                    {% if group.name == 'client_group' %}
+                                        <a href="{% url 'ticket_acheter' event.id request.user.id %}"
+                                           class="btn btn-success">Acheter Ticket</a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+    <br>
 {% endblock content %}

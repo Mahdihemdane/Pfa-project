@@ -1,5 +1,6 @@
 from asyncio import events
 from django.shortcuts import render
+from events_app.models import Events
 # Create your views here.
 
 
@@ -14,7 +15,6 @@ from django.shortcuts import render
 #     template_name = 'templates/events_app/signup.html'
 
 
-
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, Group
@@ -26,8 +26,7 @@ from .models import Organisateur, Admininstrateur, Client, Users
 
 from .forms import CustomUserCreationForm
 
-from django.contrib.auth import logout 
-
+from django.contrib.auth import logout
 
 
 def login_view(request):
@@ -38,19 +37,22 @@ def login_view(request):
             user = form.get_user()
             login(request, user)
             return redirect('event_index')
-        else: return redirect('login')
-    else :
+        else:
+            return redirect('login')
+    else:
         form = AuthenticationForm()
-        return render(request, 'users_app/login.html', {'form':form})
+        return render(request, 'users_app/login.html', {'form': form})
 
 
 def signup_view(request):
+    msg = None
     if request.method == 'POST':
         print("after == POST")
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             print("after is_valide")
             user = form.save()
+            msg = "user created successfully"
             if form.cleaned_data['user_type'] == "Client":
                 print("after === Client")
                 clnt = Client.objects.create(
@@ -68,7 +70,7 @@ def signup_view(request):
 
             elif form.cleaned_data['user_type'] == "Admin":
                 print("after == Admin")
-                user.is_staff=True
+                user.is_staff = True
                 print("after is_staff")
                 user.save()
                 print("after user.save()")
@@ -87,7 +89,7 @@ def signup_view(request):
 
             elif form.cleaned_data['user_type'] == "Organisateur":
                 print("after == Organisateur")
-                user.is_staff=True
+                user.is_staff = True
                 print("after is_staff")
                 user.save()
                 org = Organisateur.objects.create(
@@ -109,15 +111,16 @@ def signup_view(request):
             # log in l'utilisateur:
             login(request, user)
             return redirect('event_index')
+        else:
+            msg = 'form is not valid'
     else:
         form = CustomUserCreationForm()
-    return render(request, 'users_app/signup.html', {'form':form})
+    return render(request, 'users_app/signup.html', {'form': form, 'msg': msg})
 
 
 def logout_view(request):
     logout(request)
     return redirect('event_index')
-
 
 
 def ajouter_match(request):
@@ -131,35 +134,37 @@ def ajouter_match(request):
 
         image_file = request.FILES.get('image_event')
         if image_file:
-            evnt = EventService(match=match, date=date, lieu=lieu, organisateur=org,image=image_file)
+            evnt = Events(match=match, date=date, lieu=lieu, organisateur=org, image=image_file)
         else:
-            evnt = EventService(match=match, date=date, lieu=lieu, organisateur=org)
+            evnt = Events(match=match, date=date, lieu=lieu, organisateur=org)
         evnt.save()
 
         print("after evnt.save()")
         return redirect('event_index')
     organisateurs = Organisateur.objects.all()
-    return render(request, 'events_app/event_ajouter.html', {'organisateurs':organisateurs})
+    return render(request, 'events_app/event_ajouter.html', {'organisateurs': organisateurs})
 
 
-
-def to_dashboard (request):  
+def to_dashboard(request):
     return redirect('/admin/')
 
-def to_dashboard_clnts (request):  
+
+def to_dashboard_clnts(request):
     return redirect('/admin/users_app/client/')
 
-def to_dashboard_events (request):  
+
+def to_dashboard_events(request):
     return redirect('/admin/events_app/events/')
 
+
 def profile_view(request, id):
-    profile = Client.objects.get(id = id)
-    return render(request, 'users_app/profile_user.html', {'profile':profile})
-
-
+    profile = Client.objects.get(id=id)
+    return render(request, 'users_app/profile_user.html', {'profile': profile})
 
 
 from django.shortcuts import get_object_or_404
+
+
 def modifier_profil_view(request, id_user):
     if request.method == 'POST':
         # mise a jour les donnees de l'utilisateur dans la table User Django
@@ -180,8 +185,7 @@ def modifier_profil_view(request, id_user):
         clnt.save()
         print("---------------after clnt.save()")
 
+
         return redirect('profile', id_user)
 
     return render(request, 'users_app/modifier_profil.html')
-
-
